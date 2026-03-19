@@ -1,0 +1,20 @@
+apiVersion: rds.valkey.buf.red/v1alpha1
+kind: Valkey
+metadata:
+  name: valkey-sentinel
+  namespace: valkey-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  arch: failover
+  version: "8.0"
+  replicas:
+    replicasOfShard: 3
+  sentinel:
+    replicas: 3
+    quorum: 2
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 250m
